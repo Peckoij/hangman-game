@@ -1,50 +1,44 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-//var cookieParser = require('cookie-parser');
+var cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 var logger = require('morgan');
-
+const app = express();
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+var cors = require('cors');
+app.use(cors({
+    origin: 'http://localhost:4200'
+}));
 
 
-var http = require('http');
+// kantaan yhdistys
+require('./dbconnection');
+require('./models/user');
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 var fs = require('fs');
 var Moniker = require('moniker');
 
 var theNumber = 50;
 
-var app = http.createServer(function (req, res) {
-  fs.readFile("client.html", 'utf-8', function (error, data) {
-      res.writeHead(200, {
-          'Content-Type': 'text/html'
-      });
-      res.write(data);
-      res.end();
-  });
-}).listen(3010);
-//var app = express();
-
-// view engine setup
-//app.set('views', path.join(__dirname, 'views'));
-//app.set('view engine', 'pug');
-
-//app.use(logger('dev'));
-//app.use(express.json());
-//app.use(express.urlencoded({ extended: false }));
-//app.use(cookieParser());
-//app.use(express.static(path.join(__dirname, 'public')));
-
-//app.use('/', indexRouter);
-//app.use('/users', usersRouter);
-
-//http-serveri joka laitetaan muuttujaan app tuottaa sivun client.html
-
-console.log('Http server in port 3010');
-// SocketIO
-//Socket-serveri kuuntelee http-serveriä
-var io = require('socket.io').listen(app);
 
 //'connection'-tapahtuma suoritetaan joka kerta kun joku clientin 
 //socket yhdistää serverin socket.io moduliin. Parametrina

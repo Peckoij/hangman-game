@@ -7,21 +7,32 @@ import { AppComponent } from './app.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { GameComponent } from './game/game.component';
 import { AppRoutingModule } from './app-routing.module';
+import { AdminComponent } from './admin/admin.component';
+import { HighscoreComponent } from './highscore/highscore.component';
+import { LoginComponent } from './login/login.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AccountComponent } from './account/account.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:3010', options: {} };
 
 @NgModule({
   declarations: [
     AppComponent,
-    GameComponent
+    GameComponent,
+    AdminComponent,
+    HighscoreComponent,
+    LoginComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,
     SocketIoModule.forRoot(config),
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

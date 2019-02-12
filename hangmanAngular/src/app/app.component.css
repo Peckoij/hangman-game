@@ -1,0 +1,13 @@
+nav a {
+    background-color: #aaa;
+    padding: 1em;
+    
+}
+nav{
+    display: flex;
+    align-items:center;
+    justify-content: center;
+}
+body {
+
+}

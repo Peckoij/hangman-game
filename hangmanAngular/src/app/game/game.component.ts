@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-game',
@@ -7,7 +8,9 @@ import { Socket } from 'ngx-socket-io';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
-  constructor(private socket: Socket) { }
+  constructor(
+    private socket: Socket
+  ) { }
 name;
 welcome;
 userInput;
