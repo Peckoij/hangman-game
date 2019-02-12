@@ -2,16 +2,18 @@
 <html>
 
 <head>
-    <title > game client</title>
+  <title> game client</title>
 </head>
 
 <body>
-    <div id="welcome"></div>
-    <hr/>
-    <div>Guess number between 1 - 100</div>
-    <input type="text" id="message_input" />
-    <button onclick="sendMessage()">guess</button>
-    <div id="chat"></div>
+  <div id="welcome">{{welcome}}
+  </div>
+  <div>Guess number between 1 - 100</div>
+  <div>
+    <input [(ngModel)]="userInput" placeholder="50">
+  </div>
+  <button (click)="sendMessage()">guess</button>
+  <div id="chat"></div>
 </body>
 
 </html>

@@ -61,3 +61,8 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+
+
+ // RAndom bubblegum-fix for ngx-socket-io
+(window as any).global = window;
