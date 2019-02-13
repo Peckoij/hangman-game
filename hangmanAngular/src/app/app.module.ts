@@ -13,7 +13,7 @@ import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AccountComponent } from './account/account.component';
 
-const config: SocketIoConfig = { url: 'http://localhost:3010', options: {} };
+const config: SocketIoConfig = { url: 'http://localhost:3011', options: {} };
 
 @NgModule({
   declarations: [

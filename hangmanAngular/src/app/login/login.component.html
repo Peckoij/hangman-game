@@ -12,8 +12,8 @@
 
   <button type="submit" class="btn btn-success" [disabled]="!loginForm.form.valid">Login</button>
 
-  <div *ngIf='submitted && !result' class="alert alert-danger">Wrong account name</div>
-  <div *ngIf='submitted && result && result.password != password' class="alert alert-danger">Wrong password</div>
+  <div *ngIf='submitted && !result' class="loginError">Wrong account name</div>
+  <div *ngIf='submitted && result && result.password != password' class="loginError">Wrong password</div>
 
 </form>
 
@@ -21,19 +21,19 @@
 <p>Do note that lost passwords can't be recovered at all!</p>
 <form (ngSubmit)="onRegister()" #regForm="ngForm">
   <div class="form-group">
-    <label for="username">Name:</label>
+    <label for="username">Choose username:</label>
     <input type="text" class="form-control" class="username" required [(ngModel)]="regUsername" name="username" (change)="somethingChanged()">
   </div>
 
   <div class="form-group">
-    <label for="password">Password:</label>
+    <label for="password">Set password:</label>
     <input type="password" class="form-control" class="password" required [(ngModel)]="regPassword1" name="password" (change)="somethingChanged()">
   </div>
   <div class="form-group">
     <label for="password2">Confirm password:</label>
     <input type="password" class="form-control" class="password" required [(ngModel)]="regPassword2" name="password2" (change)="somethingChanged()">
   </div>
-
+  <div class="loginError">{{regMsg}}</div>
 
   <button type="submit" class="btn btn-success" [disabled]="!regForm.form.valid">Register</button>
 

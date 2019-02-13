@@ -3,10 +3,13 @@ var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 var config = require('../config');
 const mongoose = require('mongoose');
-const User = mongoose.model('Users');
+require('../models/User');
+
+const User = mongoose.model('User');
 
 exports.registerUser = function (req, res) {
-    var hashedPassword = bcrypt.hashSync(req.body.password, 8);
+    console.log(req.body);
+    var hashedPassword = bcrypt.hashSync(req.body.password, 10);
 
     User.create({
             username: req.body.username,
@@ -20,8 +23,8 @@ exports.registerUser = function (req, res) {
             }
             // create a token
             let token = jwt.sign({
-                id: user._id,
-                isAdmin: req.body.isAdmin
+                username: user.username,
+                isAdmin: user.isAdmin
             }, config.secret, {
                 expiresIn: 86400 // expires in 24 hours
             });
@@ -34,6 +37,8 @@ exports.registerUser = function (req, res) {
 }
 
 exports.authenticateUser = function (req, res) {
+    var hashedPassword = bcrypt.hashSync(req.body.password, 10);
+    console.log(req.body);
     User.findOne({
         username: req.body.username
     }, function (err, user) {
@@ -41,7 +46,7 @@ exports.authenticateUser = function (req, res) {
             return res.status(500).send('Error on the server.');
         }
         if (!user) {
-            return res.status(404).send('No user found.');
+            return res.status(400).send('No user found.');
         }
         let passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
         if (!passwordIsValid) {
@@ -52,9 +57,9 @@ exports.authenticateUser = function (req, res) {
         }
         let token = jwt.sign({
             username: user.username,
-            isadmin: user.isadmin
+            isAdmin: user.isAdmin
         }, config.secret, {
-            expiresIn: 86400 // expires in 24 hours
+            expiresIn: 86400 * 7 // expires in 24 hours *7 aka 1 week
         });
         res.status(200).send({
             auth: true,

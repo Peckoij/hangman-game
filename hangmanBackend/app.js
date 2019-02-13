@@ -7,20 +7,31 @@ var logger = require('morgan');
 const app = express();
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+const mongoose = require('mongoose');
 
+
+/// cors säätöjä
 var cors = require('cors');
 app.use(cors({
     origin: 'http://localhost:4200'
 }));
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+// CORS säädöt loppuu
 
 // kantaan yhdistys
 require('./dbconnection');
-require('./models/user');
+// mongoose scheemojen haku
+require('./models/User');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -32,13 +43,16 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+
+
 var fs = require('fs');
 var Moniker = require('moniker');
-
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+http.listen(3011);
 var theNumber = 50;
-
 
 //'connection'-tapahtuma suoritetaan joka kerta kun joku clientin 
 //socket yhdistää serverin socket.io moduliin. Parametrina
@@ -115,6 +129,6 @@ var updateUsers = function () {
       users: str
   });
 }
-
+//*/
 
 module.exports = app;

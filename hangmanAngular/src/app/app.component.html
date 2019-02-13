@@ -11,13 +11,15 @@
   <a routerLink="/game">The game</a>
   <a routerLink="/highscore">Highscore</a>
 
-  <a *ngIf="authService.isLoggedIn" routerLink="/highscore">Logout</a>
-  <a *ngIf="!authService.isLoggedIn" routerLink="/login">Login</a>
 
   <a *ngIf="authService.isLoggedIn" routerLink="/account">Account???</a>
-  <a *ngIf="authService.isLoggedIn && authorized" routerLink="/game">Mod/Admin tools</a>
+  <a *ngIf="authService.isLoggedIn && authService.currentUser.isAdmin" routerLink="/game">Mod/Admin tools</a>
 
-  <a *ngIf="authService.isLoggedIn" routerLink="/game">Contribute by adding new words</a>
+  <a *ngIf="authService.isLoggedIn && false" routerLink="/game">Contribute by adding new words ???</a>
+
+  <a *ngIf="authService.isLoggedIn" routerLink="/highscore" (click)="authService.logout()">Logout</a>
+  <a *ngIf="!authService.isLoggedIn" routerLink="/login">Login</a>
+
 </nav> 
 <router-outlet></router-outlet>
 
