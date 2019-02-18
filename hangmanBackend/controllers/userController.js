@@ -8,7 +8,7 @@ require('../models/User');
 const User = mongoose.model('User');
 
 exports.registerUser = function (req, res) {
-    console.log(req.body);
+   // console.log(req.body);
     var hashedPassword = bcrypt.hashSync(req.body.password, 10);
     User.find({
         username: req.body.username
@@ -52,8 +52,7 @@ exports.registerUser = function (req, res) {
 }
 
 exports.authenticateUser = function (req, res) {
-    var hashedPassword = bcrypt.hashSync(req.body.password, 10);
-    console.log(req.body);
+  //  console.log(req.body);
     User.findOne({
         username: req.body.username
     }, function (err, user) {

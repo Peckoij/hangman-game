@@ -44,7 +44,7 @@ export class AuthService {
     }
   }
 
-  login(user, pw): Observable<Credential> {
+  login(user: string, pw: string): Observable<Credential> {
     const url = this.loginUrl + '/login';
     const data = {
       username: user,
@@ -84,20 +84,20 @@ export class AuthService {
         catchError(this.handleError<Credential>(`getUser username=${user}`))
       );
   }
-/*
-  checkCredential(user, pw): Observable<Credential> {
-    const url = `${this.loginUrl}/?username=${user}`;
-    return this.http.get<Credential[]>(url)
-      .pipe(
-        // tslint:disable-next-line:no-shadowed-variable
-        map(user => user[0]), // returns a {0|1} element array
-        tap(h => {
-          const outcome = h ? `fetched` : `did not find`;
-        }),
-        catchError(this.handleError<Credential>(`getUser username=${user}`))
-      );
-  }
-  // */
+  /*
+    checkCredential(user, pw): Observable<Credential> {
+      const url = `${this.loginUrl}/?username=${user}`;
+      return this.http.get<Credential[]>(url)
+        .pipe(
+          // tslint:disable-next-line:no-shadowed-variable
+          map(user => user[0]), // returns a {0|1} element array
+          tap(h => {
+            const outcome = h ? `fetched` : `did not find`;
+          }),
+          catchError(this.handleError<Credential>(`getUser username=${user}`))
+        );
+    }
+    // */
 
   logout(): void {
     this.isLoggedIn = false;
@@ -105,7 +105,7 @@ export class AuthService {
     sessionStorage.removeItem('userData');
   }
 
-  registerNewUser(user, pw): Observable<any> {
+  registerNewUser(user: string, pw: string): Observable<any> {
     const url = this.loginUrl + '/register';
     const data = {
       username: user,
@@ -122,7 +122,6 @@ export class AuthService {
         }
       );
   }
-
 
   /*
   * Handle Http operation that failed.

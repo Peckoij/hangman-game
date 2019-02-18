@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 
 // Socket.io yhteys
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
 import { GameComponent } from './game/game.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AdminComponent } from './admin/admin.component';

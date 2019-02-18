@@ -1,3 +1,37 @@
-<p>
-  admin works!
-</p>
+<h2>Admin tools</h2>
+<div>
+  <select [(ngModel)]="selectedLang">
+    <option *ngFor="let l of langList" [ngValue]='l'>{{l}}</option>
+  </select>
+  <button class="btn" (click)="getList()">Get list</button>
+</div>
+<div *ngIf="wordDocument">
+    <input [(ngModel)]="inputWord" name="inputWord" placeholder="Add new word">
+    <button class="btn" (click)="addWord()">Add word</button>
+  <table>
+    <tr>
+      <th>Unapproved words</th>
+      <th></th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let uaw of wordDocument.uaWord">
+      <td>{{uaw}}</td>
+      <td (click)="approveWord(uaw)">Add</td>
+      <td (click)="delWord('uaWord', uaw)" >Del</td>
+    </tr>
+      <tr>
+        <th>Approved words</th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr *ngFor="let aw of wordDocument.aWord">
+        <td>{{aw}}</td>
+        <td (click)="approveWord(aw)">Add</td>
+        <td (click)="delWord('aWord', aw)" >Del</td>
+      </tr>
+    </table>
+</div>
+<div>
+  <input [(ngModel)]="inputLanguage" name="inputLanguage" placeholder="Add new language">
+  <button class="btn" (click)="addLanguage()">Add language</button>
+</div>

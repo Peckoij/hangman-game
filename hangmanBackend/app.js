@@ -7,6 +7,7 @@ var logger = require('morgan');
 const app = express();
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var wordsRouter = require('./routes/words');
 const mongoose = require('mongoose');
 
 
@@ -45,6 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/words', wordsRouter);
 
 
 var fs = require('fs');
