@@ -52,23 +52,22 @@ export class AuthService {
     };
     return this.http.post(url, JSON.stringify(data), httpOptions)
       .pipe(map(res => {
-        console.log(res); // loggaa alla olevan tyylisen vastauksen
+        // console.log(res);
         // tslint:disable-next-line:no-string-literal
         const token = res['token']; // otetaan vastauksesta token
         if (token) {
-          // this.token = token;
-
           try {
             // dekoodataan token
             const payload = jwtHelp.decodeToken(token);
             console.log(payload);
             // Tässä voidaan tarkistaa tokenin oikeellisuus
             if (payload.username === data.username && !isNullOrUndefined(payload.isAdmin)) {
-              // token sessionStorageen
-              // sessionStorage.setItem('accesstoken', JSON.stringify({ username: username, token: token }));
-              // this.loginTrue(); // lähetetään viesti navbariin että vaihdetaan login:true -tilaan
-              console.log('login onnistui');
-              sessionStorage.setItem('userData', JSON.stringify({ username: payload.username, isAdmin: payload.isAdmin, token }));
+              // käyttäjän tiedot ohjelman muistiin
+              this.currentUser = { username: payload.username, isAdmin: payload.isAdmin, token };
+              this.isLoggedIn = true;
+              // token ja tiedot sessionStorageen
+              sessionStorage.setItem('userData', JSON.stringify(this.currentUser));
+
               return { username: payload.username, token, isAdmin: payload.isAdmin }; // saatiin token
             } else {
               console.log('login epäonnistui');
@@ -81,38 +80,46 @@ export class AuthService {
           console.log('tokenia ei ole');
           return null;
         }
-      }));
+      }),
+        catchError(this.handleError<Credential>(`getUser username=${user}`))
+      );
   }
-  /*
-    checkCredential(user, pw): Observable<Credential> {
-      const url = `${this.loginUrl}/?username=${user}`;
-      return this.http.get<Credential[]>(url)
-        .pipe(
-          // tslint:disable-next-line:no-shadowed-variable
-          map(user => user[0]), // returns a {0|1} element array
-          tap(h => {
-            const outcome = h ? `fetched` : `did not find`;
-          }),
-          catchError(this.handleError<Credential>(`getUser username=${user}`))
-        );
-    }
-  ///*/
+/*
+  checkCredential(user, pw): Observable<Credential> {
+    const url = `${this.loginUrl}/?username=${user}`;
+    return this.http.get<Credential[]>(url)
+      .pipe(
+        // tslint:disable-next-line:no-shadowed-variable
+        map(user => user[0]), // returns a {0|1} element array
+        tap(h => {
+          const outcome = h ? `fetched` : `did not find`;
+        }),
+        catchError(this.handleError<Credential>(`getUser username=${user}`))
+      );
+  }
+  // */
+
   logout(): void {
     this.isLoggedIn = false;
     this.currentUser = null;
     sessionStorage.removeItem('userData');
   }
 
-  registerNewUser(user, pw): Observable<Credential> {
+  registerNewUser(user, pw): Observable<any> {
     const url = this.loginUrl + '/register';
     const data = {
       username: user,
       password: pw
     };
     return this.http.post(url, JSON.stringify(data), httpOptions)
-      .pipe(
-        map(res => res[0]), // returns a {0|1} element array
-        catchError(this.handleError<Credential>(`getUser username=${user}`))
+      .pipe(map(res => {
+        // console.log(res);
+        return res;
+      }),
+        (error) => {
+          console.log(error);
+          return error;
+        }
       );
   }
 

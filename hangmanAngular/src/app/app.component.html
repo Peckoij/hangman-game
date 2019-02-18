@@ -1,21 +1,21 @@
 <div style="text-align:center">
   <h1>
-    Welcome to Hangman game!
+    Hangman game
   </h1>
 </div>
 <div id="curHangmanContainer">
-  <div>Hangman: {{curHangman}}</div>
-  <button>Apply now!</button>
+  <div> Hangman: {{curHangman}}</div>
+  <button *ngIf='authService.isLoggedIn'>Apply now!</button>
 </div>
 <nav>
   <a routerLink="/game">The game</a>
   <a routerLink="/highscore">Highscore</a>
 
 
-  <a *ngIf="authService.isLoggedIn" routerLink="/account">Account???</a>
-  <a *ngIf="authService.isLoggedIn && authService.currentUser.isAdmin" routerLink="/game">Mod/Admin tools</a>
-
-  <a *ngIf="authService.isLoggedIn && false" routerLink="/game">Contribute by adding new words ???</a>
+  <a *ngIf="authService.isLoggedIn" routerLink="/account">My account</a>
+  <a *ngIf="authService.isLoggedIn && authService.currentUser.isAdmin" routerLink="/admin">Admin tools</a>
+<!-- *ngIf="authService.isLoggedIn && authService.currentUser.isAdmin" -->
+  <a *ngIf="false" routerLink="/game">Contribute by adding new words ???</a>
 
   <a *ngIf="authService.isLoggedIn" routerLink="/highscore" (click)="authService.logout()">Logout</a>
   <a *ngIf="!authService.isLoggedIn" routerLink="/login">Login</a>
