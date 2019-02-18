@@ -109,11 +109,11 @@ exports.approveWord = function (req, res) {
                 $pull: {
                     "uaWord": req.body.word
                 },
-                $push: {
+                $addToSet: {
                     "aWord": req.body.word
                 }
             }, {
-                upsert: true
+                upsert: false
             },
             function (err, dbRes) {
                 if (err) console.log(err);
@@ -126,11 +126,11 @@ exports.putApprovedWord = function (req, res) {
         Word.updateOne({
                 "language": req.params.language
             }, {
-                $push: {
+                $addToSet: {
                     "aWord": req.body.word
                 }
             }, {
-                upsert: true
+                upsert: false
             },
             function (err, dbRes) {
                 if (err) console.log(err);

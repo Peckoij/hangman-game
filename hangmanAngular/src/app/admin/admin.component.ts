@@ -47,6 +47,7 @@ export class AdminComponent implements OnInit {
       .subscribe(data => {
         console.log(data);
         this.getList();
+        this.inputWord = '';
       });
   }
 
@@ -62,11 +63,11 @@ export class AdminComponent implements OnInit {
     if (this.selectedLang.length > 0) {
       console.log(`Get word list for ${this.selectedLang}`);
       this.wordService.listWords(this.selectedLang)
-      .subscribe(data => {
-        console.log(data);
-        this.wordDocument = data;
-    //    this.refreshLangList();
-      });
+        .subscribe(data => {
+          console.log(data);
+          this.wordDocument = data;
+          //    this.refreshLangList();
+        });
     }
   }
 
