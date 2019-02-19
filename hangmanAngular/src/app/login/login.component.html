@@ -1,13 +1,14 @@
 <h4>Login</h4>
 <form (ngSubmit)="onLogin()" #loginForm="ngForm">
   <div class="form-group">
-    <label for="username">Name:</label>
+    <label for="username" class="formLabel">Name:</label>
     <input type="text" class="form-control" id="username" required [(ngModel)]="username" name="username" (change)="somethingChanged()">
   </div>
 
   <div class="form-group">
-    <label for="password">Password:</label>
-    <input type="password" class="form-control" class="password" required [(ngModel)]="password" name="password" (change)="somethingChanged()">
+    <label for="password" class="formLabel">Password:</label>
+    <input type="password" class="form-control" class="password" required [(ngModel)]="password" name="password"
+      (change)="somethingChanged()">
   </div>
 
   <button type="submit" class="btn btn-success" [disabled]="!loginForm.form.valid">Login</button>
@@ -18,27 +19,30 @@
 </form>
 
 <div *ngIf='regError!="Account created"'>
-<h4>No account yet? Register now!</h4>
-<p>Do note that lost passwords can't be recovered at all!</p>
-<form (ngSubmit)="onRegister()" #regForm="ngForm">
-  <div class="form-group">
-    <label for="username">Choose username:</label>
-    <input type="text" class="form-control" class="username" required [(ngModel)]="regUsername" name="username" (change)="somethingChanged()">
-  </div>
+  <h4>No account yet? Register now!</h4>
+  <p>Do note that lost passwords can't be recovered at all!</p>
+  <form (ngSubmit)="onRegister()" #regForm="ngForm">
+    <div class="form-group">
+      <label for="username" class="formLabel">Choose username:</label>
+      <input type="text" class="form-control" class="username" required [(ngModel)]="regUsername" name="username"
+        (change)="somethingChanged()">
+    </div>
 
-  <div class="form-group">
-    <label for="password">Set password:</label>
-    <input type="password" class="form-control" class="password" required [(ngModel)]="regPassword1" name="password" (change)="somethingChanged()">
-  </div>
-  <div class="form-group">
-    <label for="password2">Confirm password:</label>
-    <input type="password" class="form-control" class="password" required [(ngModel)]="regPassword2" name="password2" (change)="somethingChanged()">
-  </div>
- 
+    <div class="form-group">
+      <label for="password" class="formLabel">Set password:</label>
+      <input type="password" class="form-control" class="password" required [(ngModel)]="regPassword1" name="password"
+        (change)="somethingChanged()">
+    </div>
+    <div class="form-group">
+      <label for="password2" class="formLabel">Confirm password:</label>
+      <input type="password" class="form-control" class="password" required [(ngModel)]="regPassword2" name="password2"
+        (change)="somethingChanged()">
+    </div>
 
-  <button type="submit" class="btn btn-success" [disabled]="!regForm.form.valid">Register</button>
 
-</form>
+    <button type="submit" class="btn btn-success" [disabled]="!regForm.form.valid">Register</button>
+
+  </form>
 </div>
 <div class="loginError" *ngIf='regError!="Account created"'>{{regError}}</div>
 <div class="loginSuccess" *ngIf='regError=="Account created"'>{{regError}}</div>

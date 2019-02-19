@@ -4,22 +4,25 @@
   </h1>
 </div>
 <div id="curHangmanContainer">
-  <div> Hangman: {{curHangman}}</div>
-  <button *ngIf='authService.isLoggedIn'>Apply now!</button>
+  <div class="floatLeft"> Hangman: {{curHangman}}</div>
+  <button *ngIf='authService.isLoggedIn' class="floatRight">Apply now!</button>
 </div>
 <nav>
-  <a routerLink="/game">The game</a>
-  <a routerLink="/highscore">Highscore</a>
+  <a routerLink="/game" routerLinkActive="active-link">The game</a>
+  <a routerLink="/highscore" routerLinkActive="active-link">Highscore</a>
 
 
-  <a *ngIf="authService.isLoggedIn" routerLink="/account">My account</a>
-  <a *ngIf="authService.isLoggedIn && authService.currentUser.isAdmin" routerLink="/admin">Admin tools</a>
+  <a *ngIf="authService.isLoggedIn" routerLink="/account" routerLinkActive="active-link">My account</a>
+  <a *ngIf="authService.isLoggedIn && authService.currentUser.isAdmin" routerLink="/admin" routerLinkActive="active-link">Admin tools</a>
 <!-- *ngIf="authService.isLoggedIn && authService.currentUser.isAdmin" -->
-  <a *ngIf="false" routerLink="/game">Contribute by adding new words ???</a>
+  <a *ngIf="false" routerLink="/game" routerLinkActive="active-link">Contribute by adding new words ???</a>
 
   <a *ngIf="authService.isLoggedIn" routerLink="/highscore" (click)="authService.logout()">Logout</a>
-  <a *ngIf="!authService.isLoggedIn" routerLink="/login">Login</a>
+  <a *ngIf="!authService.isLoggedIn" routerLink="/login" routerLinkActive="active-link">Login</a>
 
 </nav> 
-<router-outlet></router-outlet>
+<div id="routerOutlet">
+    <router-outlet></router-outlet>
+</div>
+
 

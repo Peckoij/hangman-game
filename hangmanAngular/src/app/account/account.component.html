@@ -4,15 +4,15 @@
   <div class="loginSuccess" *ngIf='formError=="Password changed"'>{{formError}}</div>
   <p>Change password</p>
   <div class="form-group">
-    <label for="inputPw1">Current password</label>
+    <label for="inputPw1" class="formLabel">Current password</label>
     <input type="password" class="form-control" class="password" required [(ngModel)]="inputPw1" name="password">
   </div>
   <div class="form-group">
-    <label for="inputNewPw1">New password:</label>
+    <label for="inputNewPw1" class="formLabel">New password:</label>
     <input type="password" class="form-control" class="password" required [(ngModel)]="inputNewPw1" name="password">
   </div>
   <div class="form-group">
-    <label for="inputNewPw2">Confirm new password:</label>
+    <label for="inputNewPw2" class="formLabel">Confirm new password:</label>
     <input type="password" class="form-control" class="password" required [(ngModel)]="inputNewPw2" name="password2">
   </div>
 

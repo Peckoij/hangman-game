@@ -1,9 +1,69 @@
 /* You can add global styles to this file, and also import other style files */
 
 .loginError {
-    color: red;
+  color: red;
 }
 
 .loginSuccess {
-    color: green;
+  color: green;
+}
+
+nav a {
+  padding: 1em;
+  height: 100%;
+  flex: 1 1 auto;
+  text-align: center;
+  font-size: 0.75rem;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #aaa;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background-color: #bbb;
+}
+
+.floatRight {
+  float: right;
+}
+
+.floatLeft {
+  float: left;
+}
+
+#curHangmanContainer {
+  margin: 0rem 1rem;
+}
+
+#routerOutlet {
+  margin: 10px;
+}
+
+.active-link {
+  background-color: #555;
+  color: #ddd;
+}
+
+.form-group {
+  display: flex;
+  justify-content: stretch;
+    margin: 0.25rem 0rem;
+}
+
+.formLabel {
+  width: 15em;
+  max-width: 8rem;
+}
+
+h4 {
+  margin: 1em 0em 0.2em 0em;
 }
