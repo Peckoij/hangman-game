@@ -8,4 +8,5 @@ router.post('/register', userCon.registerUser);
 // kirjautuminen eli autentikaatio tunnareilla
 router.post('/login', userCon.authenticateUser);
 
+router.post('/changePassword', userCon.changePassword)
 module.exports = router;

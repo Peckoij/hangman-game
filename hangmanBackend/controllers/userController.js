@@ -81,3 +81,42 @@ exports.authenticateUser = function (req, res) {
         });
     });
 }
+
+exports.changePassword = function (req, res) {
+    //  console.log(req.body);
+      User.findOne({
+          username: req.body.username
+      }, function (err, user) {
+          if (err) {
+              return res.status(500).send('Error on the server.');
+          }
+          if (!user) {
+              return res.status(400).send('No user found.');
+          }
+          let passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+          if (!passwordIsValid) {
+              return res.status(401).send({
+                  auth: false,
+                  token: null
+              });
+          }
+          // user identity confirmed proceed with password change
+          var hashedPassword = bcrypt.hashSync(req.body.newPassword, 10);
+          User.updateOne({
+            "username": req.body.username
+        }, {
+            $set: {
+                "password": hashedPassword
+            }
+        }, {
+            upsert: false
+        },
+        function (err, dbRes) {
+            if (err) console.log(err);
+            console.log(dbRes);
+            res.status(200).send({
+                msg: 'Password changed'
+            });
+        });
+      });
+  }

@@ -1,1 +1,22 @@
 <h3>Hello {{authService.currentUser.username}}!</h3>
+<form (ngSubmit)="changePassword()" #regForm="ngForm">
+  <div class="loginError" *ngIf='formError!="Password changed"'>{{formError}}</div>
+  <div class="loginSuccess" *ngIf='formError=="Password changed"'>{{formError}}</div>
+  <p>Change password</p>
+  <div class="form-group">
+    <label for="inputPw1">Current password</label>
+    <input type="password" class="form-control" class="password" required [(ngModel)]="inputPw1" name="password">
+  </div>
+  <div class="form-group">
+    <label for="inputNewPw1">New password:</label>
+    <input type="password" class="form-control" class="password" required [(ngModel)]="inputNewPw1" name="password">
+  </div>
+  <div class="form-group">
+    <label for="inputNewPw2">Confirm new password:</label>
+    <input type="password" class="form-control" class="password" required [(ngModel)]="inputNewPw2" name="password2">
+  </div>
+
+
+  <button type="submit" class="btn btn-success" [disabled]="!regForm.form.valid">Register</button>
+
+</form>

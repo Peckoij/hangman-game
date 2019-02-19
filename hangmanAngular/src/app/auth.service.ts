@@ -116,10 +116,23 @@ export class AuthService {
         // console.log(res);
         return res;
       }),
-        (error) => {
-          console.log(error);
-          return error;
-        }
+        catchError(this.handleError<Credential>(`getUser username=${user}`))
+      );
+  }
+
+  changePassword(user: string, pw: string, npw: string): Observable<any> {
+    const url = this.loginUrl + '/changePassword';
+    const data = {
+      username: user,
+      password: pw,
+      newPassword: npw
+    };
+    return this.http.post(url, JSON.stringify(data), httpOptions)
+      .pipe(map(res => {
+        // console.log(res);
+        return res;
+      }),
+        catchError(this.handleError<Credential>(`getUser username=${user}`))
       );
   }
 

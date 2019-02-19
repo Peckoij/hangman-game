@@ -13,6 +13,10 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
         default: false
+    },
+    score: {
+        type: Number,
+        default: 0
     }
 
 });
