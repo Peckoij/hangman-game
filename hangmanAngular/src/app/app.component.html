@@ -3,7 +3,7 @@
     Hangman game
   </h1>
 </div>
-<div id="curHangmanContainer">
+<div id="curHangmanContainer" *ngIf="authService.currentUser">
   <div class="floatLeft"> Hangman: {{curHangman}}</div>
   <button *ngIf='authService.isLoggedIn' class="floatRight">Apply now!</button>
 </div>

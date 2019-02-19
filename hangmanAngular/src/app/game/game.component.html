@@ -1,19 +1,11 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <title> game client</title>
-</head>
-
-<body>
-  <div id="welcome">{{welcome}}
-  </div>
-  <div>Guess number between 1 - 100</div>
-  <div>
-    <input [(ngModel)]="userInput" placeholder="50">
-  </div>
+<button (click)="joinGame()" *ngIf="authService.isLoggedIn && !joinedGame">Join game</button>
+<p *ngIf="!authService.isLoggedIn">You need to login to join game</p>
+<div id="welcome" *ngIf="authService.isLoggedIn && joinedGame">{{welcome}}
+</div>
+<div>Guess number between 1 - 100</div>
+<div *ngIf="authService.isLoggedIn && joinedGame">
+  <input [(ngModel)]="userInput" placeholder="50">
   <button (click)="sendMessage()">guess</button>
-  <div id="chat"></div>
-</body>
+</div>
 
-</html>
+<div id="chat"></div>
