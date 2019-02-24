@@ -3,10 +3,6 @@
     Hangman game
   </h1>
 </div>
-<div id="curHangmanContainer" *ngIf="authService.currentUser">
-  <div class="floatLeft"> Hangman: {{curHangman}}</div>
-  <button *ngIf='authService.isLoggedIn' class="floatRight">Apply now!</button>
-</div>
 <nav>
   <a routerLink="/game" routerLinkActive="active-link">The game</a>
   <a routerLink="/highscore" routerLinkActive="active-link">Highscore</a>

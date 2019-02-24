@@ -13,7 +13,7 @@ nav a {
   height: 100%;
   flex: 1 1 auto;
   text-align: center;
-  font-size: 0.75rem;
+  font-size: 1rem;
 }
 
 nav {
@@ -42,6 +42,7 @@ body {
 
 #curHangmanContainer {
   margin: 0rem 1rem;
+  min-height: 2rem;
 }
 
 #routerOutlet {

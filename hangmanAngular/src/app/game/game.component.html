@@ -1,11 +1,26 @@
-<button (click)="joinGame()" *ngIf="authService.isLoggedIn && !joinedGame">Join game</button>
-<p *ngIf="!authService.isLoggedIn">You need to login to join game</p>
-<div id="welcome" *ngIf="authService.isLoggedIn && joinedGame">{{welcome}}
+<div id="curHangmanContainer" *ngIf="authService.currentUser">
+  <div>Hangman: {{hangman}}</div>
+  <div>Next hangman: {{nextHangman}}</div>
+  <button *ngIf='authService.isLoggedIn && nextHangman==="Evil AI"&&joinedGame' class="floatRight" (click)="beHangman()">Be
+    next hangman
+    now!</button>
+  <p></p>
 </div>
-<div>Guess number between 1 - 100</div>
-<div *ngIf="authService.isLoggedIn && joinedGame">
-  <input [(ngModel)]="userInput" placeholder="50">
-  <button (click)="sendMessage()">guess</button>
+<div id="joinGameContainer">
+  <button (click)="joinGame()" *ngIf="authService.isLoggedIn && !joinedGame">Join game</button>
+  <p *ngIf="!authService.isLoggedIn">You need to login to join game</p>
+  <!-- div id="welcome" *ngIf="authService.isLoggedIn && joinedGame && welcome">{{welcome}}
+</div -->
 </div>
+<div id="gameContainer" *ngIf="authService.isLoggedIn && joinedGame">
+  <div id="audienceContainer" *ngIf="!isHangman">
+    <div>Guess missing letter or correct word to earn points</div>
+    <div>
+      <input [(ngModel)]="userInput" placeholder='a-z, "banana"'>
+      <button (click)="sendQuess()">guess</button>
+    </div>
+    <div id="hangmanContainer" *ngIf="isHangman"></div>
+  </div>
 
-<div id="chat"></div>
+  <div id="chat" *ngFor="let msg of gameChat.slice().reverse()">{{msg}}</div>
+</div>
