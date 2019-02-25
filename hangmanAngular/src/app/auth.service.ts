@@ -136,6 +136,17 @@ export class AuthService {
       );
   }
 
+  getHighscore(): Observable<any> {
+    const url = this.loginUrl + '/highscore';
+    // console.log(url);
+    return this.http.get(url, httpOptions)
+      .pipe(map(res => {
+        return res;
+      }),
+        catchError(this.handleError<any>(`getHighscore`))
+      );
+  }
+
   /*
   * Handle Http operation that failed.
   * Let the app continue.

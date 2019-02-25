@@ -1,12 +1,15 @@
 var express = require('express');
 var router = express.Router();
-const userCon = require('../controllers/userController'); // user-reittien kontrolleri
-const authorize = require('../verifytoken'); // authorisointi eli vahvistetaan token
+const userCon = require('../controllers/userController'); // user routes controller
+const authorize = require('../verifytoken'); // token verification
 
-// rekisteröityminen eli luodaan uudelle käyttäjän tunnarit
+// create new account 
 router.post('/register', userCon.registerUser);
-// kirjautuminen eli autentikaatio tunnareilla
+// logging in with username and password
 router.post('/login', userCon.authenticateUser);
+
+// get highscore
+router.get('/highscore', userCon.getHighscore);
 
 router.post('/changePassword', userCon.changePassword)
 module.exports = router;

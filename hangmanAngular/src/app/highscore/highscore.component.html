@@ -1,3 +1,14 @@
-<p>
-  highscore works!
-</p>
+<h2>Top players:</h2>
+<div *ngIf="highList.length>0">
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Score</th>
+    </tr>
+    <tr *ngFor="let user of highList">
+      <td>{{user.username}}</td>
+      <td >{{user.score}}</td>
+    </tr>
+  </table>
+</div>
+<div *ngIf="highList.length<=0">Highscore currently unavailable</div>

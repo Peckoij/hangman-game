@@ -8,7 +8,7 @@ require('../models/User');
 const User = mongoose.model('User');
 
 exports.registerUser = function (req, res) {
-   // console.log(req.body);
+    // console.log(req.body);
     var hashedPassword = bcrypt.hashSync(req.body.password, 10);
     User.find({
         username: req.body.username
@@ -52,7 +52,7 @@ exports.registerUser = function (req, res) {
 }
 
 exports.authenticateUser = function (req, res) {
-  //  console.log(req.body);
+    //  console.log(req.body);
     User.findOne({
         username: req.body.username
     }, function (err, user) {
@@ -84,39 +84,72 @@ exports.authenticateUser = function (req, res) {
 
 exports.changePassword = function (req, res) {
     //  console.log(req.body);
-      User.findOne({
-          username: req.body.username
-      }, function (err, user) {
-          if (err) {
-              return res.status(500).send('Error on the server.');
-          }
-          if (!user) {
-              return res.status(400).send('No user found.');
-          }
-          let passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
-          if (!passwordIsValid) {
-              return res.status(401).send({
-                  auth: false,
-                  token: null
-              });
-          }
-          // user identity confirmed proceed with password change
-          var hashedPassword = bcrypt.hashSync(req.body.newPassword, 10);
-          User.updateOne({
-            "username": req.body.username
+    User.findOne({
+        username: req.body.username
+    }, function (err, user) {
+        if (err) {
+            return res.status(500).send('Error on the server.');
+        }
+        if (!user) {
+            return res.status(400).send('No user found.');
+        }
+        let passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+        if (!passwordIsValid) {
+            return res.status(401).send({
+                auth: false,
+                token: null
+            });
+        }
+        // user identity confirmed proceed with password change
+        var hashedPassword = bcrypt.hashSync(req.body.newPassword, 10);
+        User.updateOne({
+                "username": req.body.username
+            }, {
+                $set: {
+                    "password": hashedPassword
+                }
+            }, {
+                upsert: false
+            },
+            function (err, dbRes) {
+                if (err) console.log(err);
+                console.log(dbRes);
+                res.status(200).send({
+                    msg: 'Password changed'
+                });
+            });
+    });
+}
+
+// function to update users score in db
+exports.updateUserScore = function (user) {
+    console.log(user);
+    User.updateOne({
+            "username": user.username
         }, {
-            $set: {
-                "password": hashedPassword
+            $inc: {
+                "score": user.score
             }
         }, {
             upsert: false
         },
         function (err, dbRes) {
             if (err) console.log(err);
-            console.log(dbRes);
-            res.status(200).send({
-                msg: 'Password changed'
-            });
+            return;
         });
-      });
-  }
+}
+
+// return top10 users with highest score
+exports.getHighscore = function (req, res) {
+    User.find({
+    },{
+        _id:0, password:0, isAdmin:0  // query doesn't return these properties
+      })
+    .sort('-score')
+    .limit(10)
+    .exec(function (err, doc) {
+        if (err) console.log(err);
+        // console.log(doc);
+        res.json(doc)
+    })
+}

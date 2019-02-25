@@ -79,20 +79,23 @@ exports.getWord = function (req, res) {
 }
 
 // return random approved word from given language
-exports.returnWord = function (lang) {
+exports.returnWord = async function (lang) {
     // Math.floor((Math.random() * list.length) + 1);
-    Word.findOne({
+    console.log("Return random word from list: "+ lang);
+    
+    var words = await Word.findOne({
         language: lang
     }, function (err, words) {
         if (err) console.log(err);
-        if (words) {
-            var rndWord = words.aWord[Math.floor((Math.random() * words.aWord.length) + 1)];
-            //console.log(rndWord);
-            return rndWord;
-        } else {
-            return null;
-        }
+        //console.log(words)
     });
+    if (words) {
+        var rndWord = words.aWord[Math.floor((Math.random() * words.aWord.length) + 1)];
+        // console.log("returnWord: "+rndWord);
+        return rndWord;
+    } else {
+        return null;
+    }
 }
 exports.putWord = function (req, res) {
     var word = req.body.word.toLowerCase();
@@ -103,7 +106,7 @@ exports.putWord = function (req, res) {
         });
     }
     Word.updateOne({
-        "language": req.params.language
+        "language": req.params.language,  "aWord": {$nin: [word]}
     }, {
         $addToSet: {
             "uaWord": word
@@ -123,7 +126,7 @@ exports.putWordSocket = function (lang, word) {
         return null;
     }
     Word.updateOne({
-        "language": lang
+        "language": lang, "aWord": {$nin: [word]}
     }, {
         $addToSet: {
             "uaWord": word
@@ -137,7 +140,7 @@ exports.putWordSocket = function (lang, word) {
     });
 }
 exports.deleteWord = function (req, res) {
-    console.log(req.body);
+    //console.log(req.body);
     if (req.body.list == 'uaWord') {
         Word.updateOne({
                 "language": req.body.lang

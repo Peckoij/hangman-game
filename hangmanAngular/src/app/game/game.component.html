@@ -1,9 +1,7 @@
 <div id="curHangmanContainer" *ngIf="authService.currentUser">
   <div>Hangman: {{hangman}}</div>
-  <div>Next hangman: {{nextHangman}}</div>
-  <button *ngIf='authService.isLoggedIn && nextHangman==="Evil AI"&&joinedGame' class="floatRight" (click)="beHangman()">Be
-    next hangman
-    now!</button>
+  <div hidden>Next hangman: {{nextHangman}}</div>
+  <button hidden *ngIf='authService.isLoggedIn && nextHangman==="Evil AI"&&joinedGame && users &&users.length >= 3' (click)="beHangman()">Become next hangman now!</button>
   <p></p>
 </div>
 <div id="joinGameContainer">
@@ -13,12 +11,20 @@
 </div -->
 </div>
 <div id="gameContainer" *ngIf="authService.isLoggedIn && joinedGame">
+  <div id="roundHighscore" class="floatRight">
+    This rounds scores:
+    <div class="roundHighscoreRow" *ngFor="let hsUser of users">{{hsUser.username}}: {{hsUser.score}}</div>
+  </div>
   <div id="audienceContainer" *ngIf="!isHangman">
-    <div>Guess missing letter or correct word to earn points</div>
-    <div>
-      <input [(ngModel)]="userInput" placeholder='a-z, "banana"'>
-      <button (click)="sendQuess()">guess</button>
+    <h2>Word: {{theWord}}</h2>
+    <h2>Guesses before game over: {{guessLeft}}</h2>
+    <h4>Guess missing letter or correct word to earn points</h4>
+    <form>
+    <div *ngIf="gameRunning && guessLeft >0">
+      <input [(ngModel)]="userInput" name="userInput" placeholder='a-z, "banana"'>
+      <button (click)="sendGuess()"  type="submit" >Guess</button>
     </div>
+  </form>
     <div id="hangmanContainer" *ngIf="isHangman"></div>
   </div>
 

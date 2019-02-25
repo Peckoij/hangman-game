@@ -14,14 +14,18 @@ export class GameComponent implements OnInit {
   ) {
 
   }
-  name;
-  welcome;
-  userInput;
+  name: string;
+  welcome: string;
+  userInput: string;
   joinedGame = false;
   gameChat = [''];
   hangman: string;
   nextHangman: string;
   isHangman = false;
+  users: [{ username: string, score: number }];
+  gameRunning = false;
+  theWord = '';
+  guessLeft = 0;
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnInit() {
@@ -36,7 +40,7 @@ export class GameComponent implements OnInit {
     });
 
     this.socket.on('welcome', (data) => {
-      console.log(data);
+      // console.log(data);
       this.welcome = 'Welcome to the game ' + this.name;
       this.gameChat[0] = this.welcome;
     });
@@ -44,6 +48,19 @@ export class GameComponent implements OnInit {
       console.log(data);
       this.hangman = data.hangman;
       this.nextHangman = data.nextHangman;
+    });
+    this.socket.on('updateUsers', (data) => {
+      // console.log(data);
+      this.users = data.users;
+      // console.log(this.users);
+    });
+    this.socket.on('gameStatus', (data) => {
+      console.log(data);
+      this.theWord = data.word;
+      this.gameChat.push(data.message);
+      this.gameRunning = data.gameRunning;
+      this.guessLeft = data.guessLeft;
+      // console.log(this.users);
     });
   }
   // tslint:disable-next-line:use-life-cycle-interface
@@ -69,10 +86,10 @@ export class GameComponent implements OnInit {
   }
 
 
-  sendQuess() {
+  sendGuess() {
     console.log(this.userInput);
     // emitoidaan tapahtuma 'message_to_server' jolla lähtee JSON-dataa
-    this.socket.emit('newQuess', {
+    this.socket.emit('newGuess', {
       input: this.userInput,
       user: this.name
     });
