@@ -10,7 +10,7 @@ import { AuthService } from '../auth.service';
 export class GameComponent implements OnInit {
   constructor(
     private socket: Socket,
-    private authService: AuthService
+    public authService: AuthService
   ) {
 
   }

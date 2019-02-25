@@ -14,7 +14,7 @@ export class AccountComponent implements OnInit {
   submitted = false;
   result;
   constructor(
-    private authService: AuthService
+    public authService: AuthService
   ) { }
 
   ngOnInit() {

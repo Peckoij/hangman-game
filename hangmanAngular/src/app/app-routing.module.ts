@@ -11,7 +11,6 @@ import { AccountComponent } from './account/account.component';
 const routes: Routes = [
   // { path: 'crisis-center', component: CrisisListComponent },
   // { path: 'hero/:id',      component: HeroDetailComponent },
-  // { path: '**', component: HighscoreComponent },
   { path: '', redirectTo: '/highscore', pathMatch: 'full' },
   { path: 'game', component: GameComponent },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
@@ -19,10 +18,11 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'game', component: GameComponent },
   { path: 'account', component: AccountComponent },
+  { path: '*', redirectTo: '/highscore' }
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
