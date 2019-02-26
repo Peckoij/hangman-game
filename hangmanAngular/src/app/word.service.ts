@@ -13,7 +13,7 @@ const httpOptions = {
 })
 export class WordService {
   // URL to web api
-  private apiUrl = 'https://apihangman.peckoij.com/words';
+  private apiUrl = 'https://apihangman.peckoij.com/rest/words';
   constructor(
     private http: HttpClient,
     private authService: AuthService) { }

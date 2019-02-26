@@ -21,7 +21,7 @@ export class AuthService {
   token: string;
   decodedToken;
   currentUser: Credential;
-  private loginUrl = 'https://apihangman.peckoij.com/users';  // URL to web api 'http://localhost:3010/users'
+  private loginUrl = 'https://apihangman.peckoij.com/rest/users';  // URL to web api 'http://localhost:3010/users'
   // store the URL so we can redirect after logging in
   redirectUrl: string;
 
